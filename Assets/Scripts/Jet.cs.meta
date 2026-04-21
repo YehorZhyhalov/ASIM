@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b0950a8e6f5fbbf4e9764df3f23060c1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - EngineRD33: {fileID: 11400000, guid: 2f55545c9c0326a4b8be8698da3af5e8, type: 2}
+  - engineLeft: {instanceID: 0}
+  - engineRight: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
