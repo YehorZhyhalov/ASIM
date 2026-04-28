@@ -1,135 +1,46 @@
-﻿using AmplifyShaderEditor;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Rendering;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Jet : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve StartEngine;
-
-
-    [SerializeField] private Engines EngineRD33;
-    
-
+    [Header("Landing Gear")]
     public GameObject LandingGearFront;
     public GameObject LandingGearBackRight;
     public GameObject LandingGeearBackLeft;
 
-    public Transform engineLeft;
-    public Transform engineRight;
-
-
-    public bool engineOn = false;
+    [Header("Visuals")]
     public Material engineMat;
-    public float throttleSpeed = 1f;
 
-
-
-
-    [Range(0f, 1f)] public float throttle = 0f;
-
-    private Rigidbody rb;
+    private Airplane _airplane;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _airplane = GetComponent<Airplane>();
     }
 
     void Update()
-    {   
-        
-        UpdateEngineControll();
-        UpdateLandeingGear();
-        
-
-
-        if (!engineOn) { return; }
-        EngineUpdate();
-
-
-
-    }
-    void FixedUpdate()
     {
-        
-    }
-
-
-
-    void UpdateLandeingGear() {
-
-        if (Input.GetKeyDown(KeyCode.G)) {
-
-            LandingGearFront.SetActive(!LandingGearFront.activeSelf);
-            LandingGearBackRight.SetActive(!LandingGearBackRight.activeSelf);
-            LandingGeearBackLeft.SetActive(!LandingGeearBackLeft.activeSelf);
-
-        }
-    
-    
-    
-    }
-
-
-
-
-    void UpdateEngineControll() {
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        // 1. Уборка/Выпуск шасси на кнопку G
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            throttle += throttleSpeed * Time.deltaTime;
+            if (LandingGearFront != null) LandingGearFront.SetActive(!LandingGearFront.activeSelf);
+            if (LandingGearBackRight != null) LandingGearBackRight.SetActive(!LandingGearBackRight.activeSelf);
+            if (LandingGeearBackLeft != null) LandingGeearBackLeft.SetActive(!LandingGeearBackLeft.activeSelf);
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (_airplane != null)
         {
-            throttle -= throttleSpeed * Time.deltaTime;
+            // 2. Включение/Выключение двигателей на пробел
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _airplane.engineOn = !_airplane.engineOn;
+                Debug.Log(_airplane.engineOn ? "Engine Start" : "Engine Stop");
+            }
+
+            // 3. Эффект пламени из сопла (читает текущую тягу из Airplane)
+            if (engineMat != null)
+            {
+                engineMat.SetFloat("_EnginePower", _airplane.throttle);
+            }
         }
-        throttle = Mathf.Clamp01(throttle);
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            engineOn = !engineOn;
-            Debug.Log(engineOn ? "Engine Start" : "Engine Stop");
-
-        }
-
     }
-
-    
-
-    void EngineUpdate()
-    {
-
-
-        // Engine system
-        float thrustLeft = EngineRD33.maxThrust * throttle;
-        float thrustRight = EngineRD33.maxThrust * throttle;
-
-        //Vector3 forceLeft = engineLeft.forward * thrustPerEngine * Time.deltaTime;
-        Vector3 forceLeft = Vector3.forward * thrustLeft;
-
-
-        //LeftEngine
-        rb.AddRelativeForce(forceLeft * Time.deltaTime, ForceMode.Force);
-        Debug.DrawRay(transform.position, transform.forward * (thrustLeft * 0.001f), Color.blue);
-        Debug.Log("Engine force: " + forceLeft);
-
-        Vector3 forceRight = Vector3.forward * thrustRight;
-        //RightEngine
-        rb.AddRelativeForce(forceRight * Time.deltaTime, ForceMode.Force);
-        Debug.DrawRay(transform.position, transform.forward * (thrustRight * 0.001f), Color.blue);
-        Debug.Log("Engine force: " + forceRight);
-
-        //VFX
-        engineMat.SetFloat("_EnginePower", throttle);
-
-
-
-    }
-
-
-
-
-
 }

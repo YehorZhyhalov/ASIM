@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26bdb7adcc8d0d458c672bdbcd6f504, type: 3}
   m_Name: Engine_RD33
   m_EditorClassIdentifier: 
-  maxThrust: 900000
-  minThrust: 400000
+  maxThrust: 90000
+  minThrust: 40000
   maxHealth: 100
   Health: 100

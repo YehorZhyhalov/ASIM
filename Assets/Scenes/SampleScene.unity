@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 21490786}
   - component: {fileID: 21490788}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelColliderBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 71193911}
   - component: {fileID: 71193913}
   - component: {fileID: 71193912}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 99428942}
   - component: {fileID: 99428941}
   - component: {fileID: 99428940}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R33_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 180106448}
   - component: {fileID: 180106447}
   - component: {fileID: 180106449}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 289849954}
   - component: {fileID: 289849955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,13 +543,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289849953}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.040816445, y: 0.35235366, z: -0.015384095, w: 0.93484986}
-  m_LocalPosition: {x: 3.47, y: 0.15, z: 4}
+  m_LocalRotation: {x: -0.031822562, y: -0.032218285, z: -0.029832968, w: 0.9985286}
+  m_LocalPosition: {x: 1.7, y: 0.14999962, z: 4.2}
   m_LocalScale: {x: 100.000046, y: 100, z: 100.00005}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2968157140438682986}
-  m_LocalEulerAnglesHint: {x: -3.754, y: 41.412, z: -3.305}
+  m_LocalEulerAnglesHint: {x: -3.754, y: -3.588, z: -3.305}
 --- !u!114 &289849955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,8 +562,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 4, y: 2}
-  applyForcesToCenter: 1
+  isLeftWing: 0
+  span: 4
+  rootChord: 3.5
+  tipChord: 0.8
+  sweepAngle: 42
   wing: {fileID: 11400000, guid: 88f7b361a8476684ba6b59640a98c45b, type: 2}
   liftMultiplier: 3
   dragMultiplier: 1
@@ -576,13 +579,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 311927711}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LandingGearFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &311927711
 Transform:
   m_ObjectHideFlags: 0
@@ -610,7 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 314305764}
   - component: {fileID: 314305765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 403055197}
   - component: {fileID: 403055199}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelColliderBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 412260651}
   - component: {fileID: 412260652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RD33Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,13 +788,13 @@ GameObject:
   - component: {fileID: 424489258}
   - component: {fileID: 424489259}
   - component: {fileID: 424489260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ElevatorL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &424489258
 Transform:
   m_ObjectHideFlags: 0
@@ -819,8 +822,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 2, y: 1}
-  applyForcesToCenter: 0
+  isLeftWing: 0
+  span: 5
+  rootChord: 3.5
+  tipChord: 0.8
+  sweepAngle: 42
   wing: {fileID: 11400000, guid: f263ad39223eb1446895343a746c02fa, type: 2}
   liftMultiplier: 1
   dragMultiplier: 1
@@ -842,55 +848,6 @@ MonoBehaviour:
   targetDeflection: 0
   wing: {fileID: 1766647240}
   maxTorque: 6000
---- !u!1 &430392424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 430392425}
-  - component: {fileID: 430392426}
-  m_Layer: 0
-  m_Name: WingLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &430392425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 430392424}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.041435514, y: -0.35259935, z: -0.013629344, w: 0.93475723}
-  m_LocalPosition: {x: -3.31, y: 0.15, z: 4.03}
-  m_LocalScale: {x: 100.000046, y: 100, z: 100.00005}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2968157140438682986}
-  m_LocalEulerAnglesHint: {x: -4.995, y: -41.343, z: 0.215}
---- !u!114 &430392426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 430392424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dimensions: {x: 4, y: 2}
-  applyForcesToCenter: 1
-  wing: {fileID: 11400000, guid: 88f7b361a8476684ba6b59640a98c45b, type: 2}
-  liftMultiplier: 3
-  dragMultiplier: 1
 --- !u!1 &619742472
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +859,7 @@ GameObject:
   - component: {fileID: 619742473}
   - component: {fileID: 619742476}
   - component: {fileID: 619742475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,13 +940,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 633516556}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LandingGearLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &633516556
 Transform:
   m_ObjectHideFlags: 0
@@ -1230,7 +1187,7 @@ GameObject:
   - component: {fileID: 873078201}
   - component: {fileID: 873078200}
   - component: {fileID: 873078199}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R33_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1335,7 +1292,7 @@ GameObject:
   - component: {fileID: 930164505}
   - component: {fileID: 930164504}
   - component: {fileID: 930164503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R33_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1428,6 +1385,77 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930164501}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &949653788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949653789}
+  - component: {fileID: 949653791}
+  - component: {fileID: 949653790}
+  m_Layer: 6
+  m_Name: EleronLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949653789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949653788}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.17556256, y: -0.009977448, z: 0.9827513, w: -0.057255827}
+  m_LocalPosition: {x: -1.7200003, y: 0.29, z: 0.15999734}
+  m_LocalScale: {x: 100.000046, y: 100, z: 100.00005}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2968157140438682986}
+  m_LocalEulerAnglesHint: {x: 2.276, y: -20.133, z: 186.265}
+--- !u!114 &949653790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949653788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684ef626f6b039742bcc4b814b53652a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 33.1
+  min: 15
+  moveSpeed: 180
+  targetDeflection: 0
+  wing: {fileID: 949653791}
+  maxTorque: 6000
+--- !u!114 &949653791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949653788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLeftWing: 0
+  span: 2
+  rootChord: 1
+  tipChord: 0.8
+  sweepAngle: 21.7
+  wing: {fileID: 11400000, guid: 88f7b361a8476684ba6b59640a98c45b, type: 2}
+  liftMultiplier: 2
+  dragMultiplier: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,13 +1602,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1136553799}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LandingGearRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1136553799
 Transform:
   m_ObjectHideFlags: 0
@@ -1598,74 +1626,6 @@ Transform:
   - {fileID: 21490786}
   m_Father: {fileID: 2968157140438682986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1303379707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1303379710}
-  - component: {fileID: 1303379709}
-  - component: {fileID: 1303379708}
-  m_Layer: 0
-  m_Name: EleronLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1303379708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303379707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684ef626f6b039742bcc4b814b53652a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 35.4
-  min: 15
-  moveSpeed: 180
-  targetDeflection: 0
-  wing: {fileID: 1303379709}
-  maxTorque: 6000
---- !u!114 &1303379709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303379707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dimensions: {x: 3, y: 1}
-  applyForcesToCenter: 0
-  wing: {fileID: 11400000, guid: 88f7b361a8476684ba6b59640a98c45b, type: 2}
-  liftMultiplier: 2
-  dragMultiplier: 1
---- !u!4 &1303379710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303379707}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.17167121, z: 0, w: 0.9851543}
-  m_LocalPosition: {x: -3.24, y: 0.14, z: 1.78}
-  m_LocalScale: {x: 100.000046, y: 100, z: 100.00005}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2968157140438682986}
-  m_LocalEulerAnglesHint: {x: 0, y: -19.77, z: 0}
 --- !u!1 &1323138614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,7 +1636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323138615}
   - component: {fileID: 1323138616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RD33Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1796,7 +1756,7 @@ GameObject:
   - component: {fileID: 1336408949}
   - component: {fileID: 1336408948}
   - component: {fileID: 1336408947}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R33_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1899,7 +1859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353036467}
   - component: {fileID: 1353036468}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BodyVertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1933,8 +1893,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 3, y: 13}
-  applyForcesToCenter: 1
+  isLeftWing: 0
+  span: 1
+  rootChord: 16
+  tipChord: 15
+  sweepAngle: 42
   wing: {fileID: 11400000, guid: f263ad39223eb1446895343a746c02fa, type: 2}
   liftMultiplier: 1
   dragMultiplier: 1
@@ -1947,7 +1910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1392931138}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TailParts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1986,7 +1949,7 @@ GameObject:
   - component: {fileID: 1393454416}
   - component: {fileID: 1393454415}
   - component: {fileID: 1393454414}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EleronRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2005,7 +1968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684ef626f6b039742bcc4b814b53652a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max: 35.4
+  max: 33.1
   min: 15
   moveSpeed: 180
   targetDeflection: 0
@@ -2023,8 +1986,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 3, y: 1}
-  applyForcesToCenter: 0
+  isLeftWing: 0
+  span: 2
+  rootChord: 1
+  tipChord: 0.8
+  sweepAngle: 21.7
   wing: {fileID: 11400000, guid: 88f7b361a8476684ba6b59640a98c45b, type: 2}
   liftMultiplier: 2
   dragMultiplier: 1
@@ -2037,7 +2003,7 @@ Transform:
   m_GameObject: {fileID: 1393454413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.17167121, z: 0, w: 0.9851543}
-  m_LocalPosition: {x: 3.37, y: 0.14, z: 1.87}
+  m_LocalPosition: {x: 1.678, y: 0.14, z: 0.17}
   m_LocalScale: {x: 100.000046, y: 100, z: 100.00005}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2053,7 +2019,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499005630}
   - component: {fileID: 1499005631}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BodyHorizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2069,7 +2035,7 @@ Transform:
   m_GameObject: {fileID: 1499005629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 5.79}
+  m_LocalPosition: {x: -2.43, y: 0, z: 5.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2087,8 +2053,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 3, y: 13}
-  applyForcesToCenter: 1
+  isLeftWing: 0
+  span: 5
+  rootChord: 5
+  tipChord: 5
+  sweepAngle: 0
   wing: {fileID: 11400000, guid: f263ad39223eb1446895343a746c02fa, type: 2}
   liftMultiplier: 1
   dragMultiplier: 1
@@ -2119,6 +2088,58 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: 37b4bf77b53b98e43a51c2cc0188d71e, type: 3}
+--- !u!1 &1665942903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1665942904}
+  - component: {fileID: 1665942905}
+  m_Layer: 6
+  m_Name: WingLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1665942904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665942903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.030246394, y: -0.02948051, z: 0.9981297, w: -0.044194072}
+  m_LocalPosition: {x: -1.63, y: 0.14999962, z: 4.26}
+  m_LocalScale: {x: 100.000046, y: 100, z: 100.00005}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2968157140438682986}
+  m_LocalEulerAnglesHint: {x: 3.22, y: 3.617, z: 185.172}
+--- !u!114 &1665942905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665942903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLeftWing: 0
+  span: 4
+  rootChord: 3.5
+  tipChord: 0.8
+  sweepAngle: 42
+  wing: {fileID: 11400000, guid: 88f7b361a8476684ba6b59640a98c45b, type: 2}
+  liftMultiplier: 3
+  dragMultiplier: 1
 --- !u!1 &1766647238
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,13 +2151,13 @@ GameObject:
   - component: {fileID: 1766647239}
   - component: {fileID: 1766647240}
   - component: {fileID: 1766647241}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ElevatorR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1766647239
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,8 +2185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7dd26c122e83e449c68ba74194ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 2, y: 1}
-  applyForcesToCenter: 0
+  isLeftWing: 0
+  span: 5
+  rootChord: 3.5
+  tipChord: 0.8
+  sweepAngle: 42
   wing: {fileID: 11400000, guid: f263ad39223eb1446895343a746c02fa, type: 2}
   liftMultiplier: 1
   dragMultiplier: 1
@@ -2199,7 +2223,7 @@ GameObject:
   - component: {fileID: 1847327143}
   - component: {fileID: 1847327142}
   - component: {fileID: 1847327141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R33_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2303,7 +2327,7 @@ GameObject:
   - component: {fileID: 1860656468}
   - component: {fileID: 1860656470}
   - component: {fileID: 1860656469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2385,7 +2409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1890146561}
   - component: {fileID: 1890146565}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelColliderFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2458,7 +2482,7 @@ GameObject:
   - component: {fileID: 2128585969}
   - component: {fileID: 2128585968}
   - component: {fileID: 2128585967}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R33_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2563,7 +2587,7 @@ GameObject:
   - component: {fileID: 4629888716170962806}
   - component: {fileID: 876041731128730840}
   - component: {fileID: 6468361634696275838}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ElevatorLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2922,7 +2946,7 @@ GameObject:
   - component: {fileID: 5316577084425931604}
   - component: {fileID: 2813726210262449965}
   - component: {fileID: 8028628078780855558}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ElevatorRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2941,7 +2965,7 @@ GameObject:
   - component: {fileID: 1971640009449475387}
   - component: {fileID: 1085567682568767093}
   - component: {fileID: 1971640009449475388}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AoAWingRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2960,7 +2984,7 @@ GameObject:
   - component: {fileID: 6403590252100761764}
   - component: {fileID: 128443690015876068}
   - component: {fileID: 6403590252100761765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RudderRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2978,7 +3002,7 @@ GameObject:
   - component: {fileID: 7730469204262518266}
   - component: {fileID: 4872626055477445808}
   - component: {fileID: 8267115460674773028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ModelVFXJetEngine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3084,7 +3108,7 @@ GameObject:
   - component: {fileID: 4630928196832041410}
   - component: {fileID: 7819302742777078312}
   - component: {fileID: 316061302474390533}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EleronRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3132,7 +3156,7 @@ GameObject:
   - component: {fileID: 7199383377085213246}
   - component: {fileID: 5421901112102228852}
   - component: {fileID: 8798851099152168928}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ModelVFXJetEngine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3167,7 +3191,7 @@ GameObject:
   - component: {fileID: 2968157140438682988}
   - component: {fileID: 2968157140438682989}
   - component: {fileID: 2968157140438682990}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mig29K
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3227,7 +3251,7 @@ GameObject:
   - component: {fileID: 1688460142489755835}
   - component: {fileID: 9099362661910480227}
   - component: {fileID: 943362459591876007}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3284,18 +3308,18 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2484530819533854672}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.002126956, z: -0, w: -0.99999774}
-  m_LocalPosition: {x: -4.7, y: 17.9, z: -87.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.7, y: 26.75, z: -87.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1499005630}
   - {fileID: 1353036467}
   - {fileID: 1688460142489755835}
-  - {fileID: 430392425}
   - {fileID: 289849954}
+  - {fileID: 1665942904}
   - {fileID: 1393454416}
-  - {fileID: 1303379710}
+  - {fileID: 949653789}
   - {fileID: 8671701577123327609}
   - {fileID: 5267078003311267612}
   - {fileID: 1392931138}
@@ -3312,7 +3336,7 @@ Transform:
   - {fileID: 1847327140}
   - {fileID: 314305764}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 360.244, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2968157140438682987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3325,22 +3349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0950a8e6f5fbbf4e9764df3f23060c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartEngine:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  EngineRD33: {fileID: 11400000, guid: 2f55545c9c0326a4b8be8698da3af5e8, type: 2}
   LandingGearFront: {fileID: 311927710}
   LandingGearBackRight: {fileID: 1136553798}
   LandingGeearBackLeft: {fileID: 633516555}
-  engineLeft: {fileID: 1323138615}
-  engineRight: {fileID: 412260651}
-  engineOn: 0
   engineMat: {fileID: 2100000, guid: 79c2d5bbccfd2224a8a86c842fbf7a5f, type: 2}
-  throttleSpeed: 1
-  throttle: 0
 --- !u!54 &2968157140438682988
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3364,7 +3376,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3401,11 +3413,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b4901dd9f9c6848969cb38cdf20258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elevatorRight: {fileID: 1766647241}
-  elevatorLeft: {fileID: 424489260}
-  aileronLeft: {fileID: 1303379708}
-  aileronRight: {fileID: 1393454414}
-  rudder: {fileID: 0}
+  mass: 11000
+  inertiaTensor: {x: 100000, y: 300000, z: 400000}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 55
+  engineOn: 0
+  engineData: {fileID: 11400000, guid: 2f55545c9c0326a4b8be8698da3af5e8, type: 2}
+  engineExhausts:
+  - {fileID: 1323138615}
+  - {fileID: 412260651}
+  elevators:
+  - {fileID: 424489260}
+  - {fileID: 1766647241}
+  aileronsLeft:
+  - {fileID: 0}
+  aileronsRight:
+  - {fileID: 1393454414}
+  rudders: []
+  throttle: 0
 --- !u!4 &2975565564565695726
 Transform:
   m_ObjectHideFlags: 0
@@ -3474,7 +3500,7 @@ GameObject:
   - component: {fileID: 5951134230061420555}
   - component: {fileID: 1598387054987941189}
   - component: {fileID: 2598917779240455011}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AileronLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3501,7 +3527,7 @@ GameObject:
   - component: {fileID: 1918958598883590262}
   - component: {fileID: 9079283071717592308}
   - component: {fileID: 9079283071717592309}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AoAWingLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3534,7 +3560,7 @@ GameObject:
   - component: {fileID: 4718557110998452128}
   - component: {fileID: 7614603925392916202}
   - component: {fileID: 6379696094656715390}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ModelVFXV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3656,7 +3682,7 @@ GameObject:
   - component: {fileID: 6406600790989911001}
   - component: {fileID: 7692953127074875878}
   - component: {fileID: 7692953127074875879}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RudderLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3674,7 +3700,7 @@ GameObject:
   - component: {fileID: 2975565564565695726}
   - component: {fileID: 116102114206324132}
   - component: {fileID: 3511048907026313520}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ModelVFXV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3809,7 +3835,7 @@ GameObject:
   - component: {fileID: 1846677603190771119}
   - component: {fileID: 5621081979225875712}
   - component: {fileID: 1591506800598591572}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AileronRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3828,7 +3854,7 @@ GameObject:
   - component: {fileID: 4196954388628620131}
   - component: {fileID: 861305173836599492}
   - component: {fileID: 8671701577123327611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3861,7 +3887,7 @@ GameObject:
   - component: {fileID: 4263792081234407339}
   - component: {fileID: 1078186920200780723}
   - component: {fileID: 7501941177188448153}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EleronLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4161,7 +4187,7 @@ GameObject:
   - component: {fileID: 7526295005051250714}
   - component: {fileID: 885117086892961764}
   - component: {fileID: 8726788586553528542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

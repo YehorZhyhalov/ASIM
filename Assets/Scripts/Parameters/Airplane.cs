@@ -4,18 +4,34 @@ using System;
 [RequireComponent(typeof(Rigidbody))]
 public class Airplane : MonoBehaviour
 {
+    [Header("Custom Physics Properties")]
+    public float mass = 11000f;
+    public Vector3 inertiaTensor = new Vector3(100000f, 300000f, 400000f);
+    public LayerMask groundMask = ~0;
+
+    [Header("Engines")]
+    public bool engineOn = false;
+    public Engines engineData;
+    public Transform[] engineExhausts;
+
     [Header("Control Surfaces")]
     public ControlSurface[] elevators;
     public ControlSurface[] aileronsLeft;
     public ControlSurface[] aileronsRight;
     public ControlSurface[] rudders;
 
-    public Rigidbody Rigidbody { get; private set; }
+    public Vector3 LinearVelocity { get; private set; }
+    public Vector3 AngularVelocity { get; private set; }
+
+    private Vector3 _accumulatedForce;
+    private Vector3 _accumulatedTorque;
+
     private Transform _transform;
+    private Rigidbody _rb;
 
-    private float _throttle = 1.0f;
+    [Range(0f, 1f)]
+    public float throttle = 0.0f;
     private bool _yawDefined = false;
-
 
     private readonly Rect _rectSpeed = new Rect(10, 40, 300, 20);
     private readonly Rect _rectThrottle = new Rect(10, 60, 300, 20);
@@ -23,21 +39,15 @@ public class Airplane : MonoBehaviour
 
     private void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody>();
         _transform = transform;
+        _rb = GetComponent<Rigidbody>();
+        _rb.isKinematic = true;
     }
 
     private void Start()
     {
-        try
-        {
-            Input.GetAxis("Yaw");
-            _yawDefined = true;
-        }
-        catch (ArgumentException e)
-        {
-            Debug.LogWarning($"{name}: \"Yaw\" axis not defined in Input Manager. Rudder will not work correctly!\n{e.Message}");
-        }
+        try { Input.GetAxis("Yaw"); _yawDefined = true; }
+        catch (ArgumentException e) { Debug.LogWarning($"{name}: \"Yaw\" not defined.\n{e.Message}"); }
     }
 
     private void Update()
@@ -46,10 +56,126 @@ public class Airplane : MonoBehaviour
         float rollInput = Input.GetAxis("Horizontal");
         float yawInput = _yawDefined ? Input.GetAxis("Yaw") : 0f;
 
+        if (engineOn)
+        {
+            if (Input.GetKey(KeyCode.LeftShift)) throttle += Time.deltaTime;
+            if (Input.GetKey(KeyCode.LeftControl)) throttle -= Time.deltaTime;
+            throttle = Mathf.Clamp01(throttle);
+        }
+        else
+        {
+            throttle = 0f;
+        }
+
         ApplyInputToSurfaces(elevators, pitchInput);
         ApplyInputToSurfaces(aileronsLeft, -rollInput);
         ApplyInputToSurfaces(aileronsRight, rollInput);
         ApplyInputToSurfaces(rudders, yawInput);
+    }
+
+    public void AddForceAtPosition(Vector3 force, Vector3 position)
+    {
+        _accumulatedForce += force;
+        Vector3 r = position - _transform.position;
+        _accumulatedTorque += Vector3.Cross(r, force);
+    }
+
+    public Vector3 GetPointVelocity(Vector3 worldPoint)
+    {
+        Vector3 r = worldPoint - _transform.position;
+        return LinearVelocity + Vector3.Cross(AngularVelocity, r);
+    }
+
+    private void FixedUpdate()
+    {
+        float dt = Time.fixedDeltaTime;
+        float collisionRadius = 2.0f;
+
+        _accumulatedForce = Vector3.zero;
+        _accumulatedTorque = Vector3.zero;
+
+        _accumulatedForce += Physics.gravity * mass;
+
+        // TODO: BALANCE FIX (FLIP ON TAKEOFF PROBLEM)
+        // If pressing the throttle causes the airplane to do a "Cobra" and flip over on the spot:
+        // Your engines (RD33Left / RD33Right empty objects) are located too LOW relative to the center of mass (Airplane's Pivot).
+        // Open Unity, select both engine empty objects and move them slightly UP (along the Y axis) until they are
+        // aligned with the center of gravity.
+        if (engineData != null && engineExhausts != null && engineOn)
+        {
+            float currentThrust = Mathf.Lerp(engineData.minThrust, engineData.maxThrust, throttle);
+            float thrustPerEngine = currentThrust / (engineExhausts.Length > 0 ? engineExhausts.Length : 1);
+
+            foreach (var exhaust in engineExhausts)
+            {
+                if (exhaust != null) AddForceAtPosition(exhaust.forward * thrustPerEngine, exhaust.position);
+            }
+        }
+
+        bool isGrounded = Physics.Raycast(_transform.position, Vector3.down, out RaycastHit groundHit, collisionRadius + 0.5f, groundMask);
+
+        if (isGrounded)
+        {
+            float downwardForce = Vector3.Dot(_accumulatedForce, groundHit.normal);
+            if (downwardForce < 0) _accumulatedForce -= groundHit.normal * downwardForce;
+
+            if (throttle < 0.05f)
+            {
+                if (LinearVelocity.magnitude < 3.0f && AngularVelocity.magnitude < 0.5f)
+                {
+                    LinearVelocity = Vector3.zero;
+                    AngularVelocity = Vector3.zero;
+                    _accumulatedForce = Vector3.zero;
+                    _accumulatedTorque = Vector3.zero;
+                }
+                else
+                {
+                    LinearVelocity = Vector3.Lerp(LinearVelocity, Vector3.zero, 3f * dt);
+                    AngularVelocity = Vector3.Lerp(AngularVelocity, Vector3.zero, 3f * dt);
+                }
+            }
+            else
+            {
+                LinearVelocity *= 0.99f;
+            }
+        }
+
+        LinearVelocity += (_accumulatedForce / mass) * dt;
+
+        Vector3 localTorque = _transform.InverseTransformDirection(_accumulatedTorque);
+        Vector3 localAngularAcceleration = new Vector3(
+            localTorque.x / inertiaTensor.x,
+            localTorque.y / inertiaTensor.y,
+            localTorque.z / inertiaTensor.z
+        );
+        Vector3 angularAcceleration = _transform.TransformDirection(localAngularAcceleration);
+
+        AngularVelocity += angularAcceleration * dt;
+        AngularVelocity *= 0.95f;
+
+        if (AngularVelocity.magnitude > 20f) AngularVelocity = AngularVelocity.normalized * 20f;
+
+        Vector3 movementStep = LinearVelocity * dt;
+
+        if (movementStep.sqrMagnitude > 0.0001f && Physics.SphereCast(_transform.position, collisionRadius, movementStep.normalized, out RaycastHit hit, movementStep.magnitude, groundMask))
+        {
+            LinearVelocity = Vector3.ProjectOnPlane(LinearVelocity, hit.normal);
+            _transform.position = hit.point + hit.normal * collisionRadius;
+        }
+        else
+        {
+            _transform.position += movementStep;
+
+            if (isGrounded && LinearVelocity.magnitude < 10f)
+            {
+                if (LinearVelocity.y < 0) LinearVelocity = new Vector3(LinearVelocity.x, 0f, LinearVelocity.z);
+                _transform.position = new Vector3(_transform.position.x, groundHit.point.y + collisionRadius, _transform.position.z);
+            }
+        }
+
+        Vector3 angularVelocityDegrees = AngularVelocity * Mathf.Rad2Deg;
+        Quaternion deltaRotation = Quaternion.Euler(angularVelocityDegrees * dt);
+        _transform.rotation = _transform.rotation * deltaRotation;
     }
 
     private void ApplyInputToSurfaces(ControlSurface[] surfaces, float input)
@@ -57,32 +183,24 @@ public class Airplane : MonoBehaviour
         if (surfaces == null) return;
         for (int i = 0; i < surfaces.Length; i++)
         {
-            if (surfaces[i] != null)
-                surfaces[i].targetDeflection = input;
+            if (surfaces[i] != null) surfaces[i].targetDeflection = input;
         }
     }
 
     private float CalculatePitchG()
     {
-        Vector3 localVelocity = _transform.InverseTransformDirection(Rigidbody.velocity);
-        Vector3 localAngularVel = _transform.InverseTransformDirection(Rigidbody.angularVelocity);
-
+        Vector3 localVelocity = _transform.InverseTransformDirection(LinearVelocity);
+        Vector3 localAngularVel = _transform.InverseTransformDirection(AngularVelocity);
         float radius = Mathf.Approximately(localAngularVel.x, 0.0f) ? float.MaxValue : localVelocity.z / localAngularVel.x;
         float verticalForce = Mathf.Approximately(radius, 0.0f) ? 0.0f : (localVelocity.z * localVelocity.z) / radius;
-
-        float verticalG = verticalForce / -9.81f;
-        verticalG += _transform.up.y * (Physics.gravity.y / -9.81f);
-
-        return verticalG;
+        return (verticalForce / -9.81f) + (_transform.up.y * (Physics.gravity.y / -9.81f));
     }
 
     private void OnGUI()
     {
-        const float msToKnots = 1.94384f;
-
-       
-        GUI.Label(_rectSpeed, $"Speed: {Rigidbody.velocity.magnitude * msToKnots:0.0} knots");
-        GUI.Label(_rectThrottle, $"Throttle: {_throttle * 100.0f:0.0}%");
+        GUI.Label(_rectSpeed, $"Speed: {LinearVelocity.magnitude * 1.94384f:0.0} knots");
+        GUI.Label(_rectThrottle, $"Throttle: {throttle * 100.0f:0.0}%");
         GUI.Label(_rectGLoad, $"G Load: {CalculatePitchG():0.0} G");
+        GUI.Label(new Rect(10, 100, 300, 20), $"Engine: {(engineOn ? "ON" : "OFF")}");
     }
 }
