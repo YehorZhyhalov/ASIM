@@ -22,7 +22,7 @@ public class ControlSurface : MonoBehaviour
     [Tooltip("How much force the control surface can exert. The lower this is, the more the control surface stiffens with speed.")]
     public float maxTorque = 6000f;
 
-    private Rigidbody _rigid = null;
+    private Airplane _airplane = null; // now can get Airplane
     private Transform _transform;
     private Quaternion _startLocalRotation = Quaternion.identity;
     private float _currentAngle = 0f;
@@ -31,7 +31,7 @@ public class ControlSurface : MonoBehaviour
     {
         _transform = transform;
         if (wing != null)
-            _rigid = GetComponentInParent<Rigidbody>();
+            _airplane = GetComponentInParent<Airplane>();
     }
 
     private void Start()
@@ -43,18 +43,17 @@ public class ControlSurface : MonoBehaviour
     {
         float targetAngle = targetDeflection > 0f ? targetDeflection * max : targetDeflection * min;
 
-        if (_rigid != null && wing != null && _rigid.velocity.sqrMagnitude > 1f)
+        // EDTI! Use _airplane.LinearVelocity instead of _rigid.velocity
+        if (_airplane != null && wing != null && _airplane.LinearVelocity.sqrMagnitude > 1f)
         {
-            float torqueAtMaxDeflection = _rigid.velocity.sqrMagnitude * wing.WingArea;
-            float maxAvailableDeflection = Mathf.Asin(maxTorque / torqueAtMaxDeflection) * Mathf.Rad2Deg;
+            float torqueAtMaxDeflection = _airplane.LinearVelocity.sqrMagnitude * wing.WingArea;
+            float maxAvailableDeflection = Mathf.Asin(Mathf.Clamp01(maxTorque / torqueAtMaxDeflection)) * Mathf.Rad2Deg;
 
             if (!float.IsNaN(maxAvailableDeflection))
-                targetAngle *= Mathf.Clamp01(maxAvailableDeflection);
+                targetAngle *= Mathf.Clamp01(maxAvailableDeflection / Mathf.Max(max, min));
         }
 
         _currentAngle = Mathf.MoveTowards(_currentAngle, targetAngle, moveSpeed * Time.fixedDeltaTime);
-
-        
         _transform.localRotation = _startLocalRotation * Quaternion.Euler(_currentAngle, 0f, 0f);
     }
 }
